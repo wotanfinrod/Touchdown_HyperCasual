@@ -11,33 +11,49 @@ public class SpawnManager : MonoBehaviour
 
     Queue<GameObject> chunkQueue;
     Queue<GameObject> enemyQueue;
-    
+    Queue<GameObject> friendQueue;
     Vector3 chunkSpawnLocation = new Vector3(0, 0, 109.7932f);
-    Vector3 enemySpawnLocation = new Vector3(-3f, 0, 107.050003f);
+    Vector3 enemySpawnLocation = new Vector3(-2f, 0, 107.050003f);
 
     void Start()
     {
-        //For pooling
+        endChunk.SetActive(false);
+
+        //ChunkPool
         chunkQueue = new Queue<GameObject>();
         for (int i = 1; i <= 12; i++)
             chunkQueue.Enqueue(GameObject.Find("Chunk" + i));
 
+        //EnemyPool
         enemyQueue = new Queue<GameObject>();
         for (int i = 1; i <= 22; i++)
             enemyQueue.Enqueue(GameObject.Find("Enemy" + i));
+
+        //FriendPool
+        friendQueue = new Queue<GameObject>();
+        for (int i = 1; i <= 4; i++ )
+        {
+            friendQueue.Enqueue(GameObject.Find("Friend" + i));
+        }
     }
 
-    void Update()
-    {
-        
-    }
 
     public void PoolChunk()
     {
+        if (endChunk.activeSelf) return; //Stop generating chunks if ending chunk is on
+
+        if(chunkCount >= 6 ) //Generate the level end
+        {
+            endChunk.transform.position = chunkSpawnLocation;
+            endChunk.SetActive(true);
+            return;
+        }
+           
         chunkCount++;
         GameObject currentChunk = chunkQueue.Dequeue();
         currentChunk.transform.position = chunkSpawnLocation;
-        chunkQueue.Enqueue(currentChunk);      
+        chunkQueue.Enqueue(currentChunk);
+        
     }
 
     //Everytime player passes chunk; 0, 1 or 2 enemies will be spawned with the new chunk. 
@@ -59,5 +75,4 @@ public class SpawnManager : MonoBehaviour
         }
         currentEnemies.Clear();
     }
-
 }
