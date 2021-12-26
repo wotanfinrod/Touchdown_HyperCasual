@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class DudeController : MonoBehaviour
 {
     PlayerController playerScript;
     Animator animator;
@@ -15,6 +15,6 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-       if (playerScript.gameStart) animator.SetBool("onRun", true);
+       if (playerScript.gameStart) animator.SetBool("gameStart", true);
     }
 }

@@ -7,6 +7,7 @@ public class ShiftHandler : MonoBehaviour
     int speed; //Player speed controller
     PlayerController playerScript;
 
+
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();

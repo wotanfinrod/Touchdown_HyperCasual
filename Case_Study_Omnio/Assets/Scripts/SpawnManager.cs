@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
     
     Vector3 chunkSpawnLocation = new Vector3(0, 0, 109.7932f);
     Vector3 enemySpawnLocation = new Vector3(-2f, 0, 107.050003f);
-    Vector3 friendSpawnLocation = new Vector3(3, 0.0299999993f, 36.3699989f);
+    Vector3 friendSpawnLocation = new Vector3(2, 0.0299999993f, 36.3699989f);
 
     void Start()
     {
@@ -59,11 +59,10 @@ public class SpawnManager : MonoBehaviour
         chunkCount++;
         GameObject currentChunk = chunkQueue.Dequeue();
         currentChunk.transform.position = chunkSpawnLocation;
-        chunkQueue.Enqueue(currentChunk);
-        
+        chunkQueue.Enqueue(currentChunk);  
     }
 
-    //Everytime player passes chunk; 0, 1 or 2 enemies will be spawned with the new chunk. 
+    //Everytime player passes a chunk; 0, 1 or 2 enemies will be spawned with the new chunk. 
     public void PoolEnemy()
     {
         List<GameObject> currentEnemies = new List<GameObject>();
