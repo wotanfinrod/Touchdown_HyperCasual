@@ -8,12 +8,15 @@ public class SpawnManager : MonoBehaviour
     int chunkCount;
 
     [SerializeField] GameObject endChunk;
+    [SerializeField] GameObject player;
 
     Queue<GameObject> chunkQueue;
     Queue<GameObject> enemyQueue;
     Queue<GameObject> friendQueue;
+    
     Vector3 chunkSpawnLocation = new Vector3(0, 0, 109.7932f);
     Vector3 enemySpawnLocation = new Vector3(-2f, 0, 107.050003f);
+    Vector3 friendSpawnLocation = new Vector3(3, 0.0299999993f, 36.3699989f);
 
     void Start()
     {
@@ -36,7 +39,11 @@ public class SpawnManager : MonoBehaviour
             friendQueue.Enqueue(GameObject.Find("Friend" + i));
         }
     }
-
+    private void Update()
+    {
+        if (player.transform.position.z > friendQueue.Peek().transform.position.z) //Check if player passes the friend in front of him
+            PoolFriend();
+    }
 
     public void PoolChunk()
     {
@@ -74,5 +81,11 @@ public class SpawnManager : MonoBehaviour
             enemyQueue.Enqueue(enemy);
         }
         currentEnemies.Clear();
+    }
+    public void PoolFriend()
+    {        
+        GameObject currentFriend = friendQueue.Dequeue();
+        currentFriend.transform.position = friendSpawnLocation;
+        friendQueue.Enqueue(currentFriend);
     }
 }

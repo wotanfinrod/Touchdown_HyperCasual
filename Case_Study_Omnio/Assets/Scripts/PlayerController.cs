@@ -1,10 +1,12 @@
 using DG.Tweening;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] List<GameObject> ragdollComponents;
+    [SerializeField] GameObject canvas;
 
     public bool gameStart;
     public bool gameWon;
@@ -18,12 +20,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        DisableRagdolls();
-        gameStart = gameWon = gameLose = false;
-
         spawnManager = GameObject.Find("GameManager").GetComponent<SpawnManager>();
         mainCamera = GameObject.Find("Main Camera");
         animator = gameObject.GetComponent<Animator>();
+
+        DisableRagdolls();
+        gameStart = gameWon = gameLose = false;
+        canvas.SetActive(false);
+        
     }
 
     void Update()
@@ -57,9 +61,8 @@ public class PlayerController : MonoBehaviour
         mainCamera.transform.DOMoveZ(mainCamera.transform.position.z - 3f, 1.5f);
         mainCamera.transform.DOMoveY(mainCamera.transform.position.y + 2f, 1.5f);
 
-    }
-
-    
+        canvas.SetActive(true);
+    } 
     void DisableRagdolls()
     {
         foreach (GameObject obj in ragdollComponents)
@@ -81,7 +84,7 @@ public class PlayerController : MonoBehaviour
         mainCamera.transform.DOMoveZ(mainCamera.transform.position.z - 3f, 1.5f);
         mainCamera.transform.DOMoveY(mainCamera.transform.position.y + 2f, 1.5f);
 
-
+        canvas.SetActive(true);
 
         foreach (GameObject obj in ragdollComponents) //Enable ragdoll components
         {
@@ -91,8 +94,16 @@ public class PlayerController : MonoBehaviour
             rigidbody.useGravity = true;
         }
     }
+    
+    public void UIButtonClick()
+    {
+        SceneManager.LoadScene(0);
+    }
+    
     //Getters-Setters
     public int getSpeed() { return playerSpeed; }
+
+
 
 
 }

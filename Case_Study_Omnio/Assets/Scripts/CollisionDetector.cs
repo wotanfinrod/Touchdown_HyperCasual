@@ -26,10 +26,5 @@ public class CollisionDetector : MonoBehaviour
 
         else if (other.gameObject.CompareTag("EndChunk"))        
             playerScript.GameWon();
-        
-
     }
-
-   
-
 }
