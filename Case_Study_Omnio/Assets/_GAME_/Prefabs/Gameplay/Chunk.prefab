@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 3706176565489019555}
   - component: {fileID: 2904327248638927657}
   - component: {fileID: 1231247397437548367}
+  - component: {fileID: 3464992156329575652}
   m_Layer: 0
   m_Name: Chunk
   m_TagString: Chunk
@@ -90,7 +91,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb9288d9ff49844a8381345a165bebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+--- !u!65 &3464992156329575652
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126282766154662252}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 15.2, y: 5.7342463, z: 0.4252324}
+  m_Center: {x: 0.11000013, y: 2.7271237, z: 5.48}
 --- !u!1 &4012066103041285999
 GameObject:
   m_ObjectHideFlags: 0

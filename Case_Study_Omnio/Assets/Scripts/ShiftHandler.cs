@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShiftHandler : MonoBehaviour
 {
-    int speed;
+    int speed; //Player speed controller
     PlayerController playerScript;
 
     void Start()
@@ -12,10 +12,19 @@ public class ShiftHandler : MonoBehaviour
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         speed = playerScript.getSpeed();
-        gameObject.transform.Translate(Vector3.back * speed * Time.deltaTime);
+
+        if (gameObject.CompareTag("Enemy"))
+        {
+            gameObject.transform.Translate(Vector3.back * -2 * speed * Time.deltaTime); //Enemy movement
+        }
+        if (gameObject.CompareTag("Friend"))
+        {
+            Debug.Log(speed - 5);
+            gameObject.transform.Translate(Vector3.back * Mathf.Max((speed - 5), 0) * Time.deltaTime);
+        }
+        else gameObject.transform.Translate(Vector3.back * (speed) * Time.deltaTime);
     }
 }

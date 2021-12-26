@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
-    //const float cameraY;
-    //const float cameraZ;
+    public bool gameStart;
+    public bool gameFinished;
 
 
     int playerSpeed;
@@ -14,11 +14,18 @@ public class PlayerController : MonoBehaviour
 
     Animator animator;
     GameObject mainCamera;
+    SpawnManager spawnManager;
 
     void Start()
     {
+        gameStart = false;
+        gameFinished = false;
+
+        spawnManager = GameObject.Find("GameManager").GetComponent<SpawnManager>();
         mainCamera = GameObject.Find("Main Camera");
         animator = gameObject.GetComponent<Animator>();
+
+
 
     }
 
@@ -28,23 +35,23 @@ public class PlayerController : MonoBehaviour
         Transform cameraTransform = mainCamera.transform;
         Vector3 cameraPos = new Vector3(cameraTransform.position.x + cameraDrag.x, cameraTransform.position.y + cameraDrag.y , cameraTransform.position.z + cameraDrag.z);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) //Key is pressed.
         {
+            gameStart = true;
+
             animator.SetBool("gameStart", true);
             playerSpeed = 10;
             gameObject.transform.DOMoveX(-3f, 0.5f);
             mainCamera.transform.DOMoveY((mainCamera.transform.position.y) +2f ,0.5f);
             mainCamera.transform.DOMoveZ((mainCamera.transform.position.z) - 2f, 0.5f);
-            mainCamera.transform.DORotate(mainCamera.transform.rotation.eulerAngles + new Vector3(5, 0, 0));
         }
 
-        else if(Input.GetKeyUp(KeyCode.Space))
+        else if(Input.GetKeyUp(KeyCode.Space)) //Key is not pressed anymore.
         {
             playerSpeed = 5;
             gameObject.transform.DOMoveX(+3f, 0.5f);
             mainCamera.transform.DOMoveY((mainCamera.transform.position.y) - 2f, 0.5f);
             mainCamera.transform.DOMoveZ((mainCamera.transform.position.z) + 2f, 0.5f);
-
         }
 
     }
@@ -52,4 +59,18 @@ public class PlayerController : MonoBehaviour
     //Getters-Setters
     public int getSpeed() { return playerSpeed; }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Chunk")) //If player enters a new chunk
+        {
+            spawnManager.PoolChunk();
+            spawnManager.PoolEnemy();
+        }
+    }
+
+
+
 }
+
+
+
