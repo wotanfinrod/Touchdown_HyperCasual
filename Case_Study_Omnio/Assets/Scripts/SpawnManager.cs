@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    int chunkCount;
+
+    [SerializeField] GameObject endChunk;
+
     Queue<GameObject> chunkQueue;
     Queue<GameObject> enemyQueue;
     
- 
     Vector3 chunkSpawnLocation = new Vector3(0, 0, 109.7932f);
     Vector3 enemySpawnLocation = new Vector3(-3f, 0, 107.050003f);
-
-
 
     void Start()
     {
@@ -24,8 +25,6 @@ public class SpawnManager : MonoBehaviour
         enemyQueue = new Queue<GameObject>();
         for (int i = 1; i <= 22; i++)
             enemyQueue.Enqueue(GameObject.Find("Enemy" + i));
-
-
     }
 
     void Update()
@@ -35,6 +34,7 @@ public class SpawnManager : MonoBehaviour
 
     public void PoolChunk()
     {
+        chunkCount++;
         GameObject currentChunk = chunkQueue.Dequeue();
         currentChunk.transform.position = chunkSpawnLocation;
         chunkQueue.Enqueue(currentChunk);      
@@ -45,7 +45,7 @@ public class SpawnManager : MonoBehaviour
     {
         List<GameObject> currentEnemies = new List<GameObject>();
 
-        int enemyNumber = Random.Range(0, 4);
+        int enemyNumber = Random.Range(0, 3);
         for (int i = 0; i < enemyNumber; i++)
             currentEnemies.Add(enemyQueue.Dequeue());
         

@@ -1,16 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public bool gameStart;
     public bool gameFinished;
 
-
     int playerSpeed;
-    Vector3 cameraDrag; 
 
     Animator animator;
     GameObject mainCamera;
@@ -24,17 +20,10 @@ public class PlayerController : MonoBehaviour
         spawnManager = GameObject.Find("GameManager").GetComponent<SpawnManager>();
         mainCamera = GameObject.Find("Main Camera");
         animator = gameObject.GetComponent<Animator>();
-
-
-
     }
 
     void Update()
     {
-        //Calculating the global position for camera
-        Transform cameraTransform = mainCamera.transform;
-        Vector3 cameraPos = new Vector3(cameraTransform.position.x + cameraDrag.x, cameraTransform.position.y + cameraDrag.y , cameraTransform.position.z + cameraDrag.z);
-
         if (Input.GetKeyDown(KeyCode.Space)) //Key is pressed.
         {
             gameStart = true;
@@ -42,16 +31,14 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("gameStart", true);
             playerSpeed = 10;
             gameObject.transform.DOMoveX(-3f, 0.5f);
-            mainCamera.transform.DOMoveY((mainCamera.transform.position.y) +2f ,0.5f);
-            mainCamera.transform.DOMoveZ((mainCamera.transform.position.z) - 2f, 0.5f);
+            mainCamera.transform.DOMove(new Vector3(-3f, 6.49600029f, -8.76000023f), 0.5f);
         }
 
-        else if(Input.GetKeyUp(KeyCode.Space)) //Key is not pressed anymore.
+        else if (Input.GetKeyUp(KeyCode.Space)) //Key is not pressed anymore.
         {
             playerSpeed = 5;
             gameObject.transform.DOMoveX(+3f, 0.5f);
-            mainCamera.transform.DOMoveY((mainCamera.transform.position.y) - 2f, 0.5f);
-            mainCamera.transform.DOMoveZ((mainCamera.transform.position.z) + 2f, 0.5f);
+            mainCamera.transform.DOMove(new Vector3(+3f, 4.49600029f, -6.76000023f), 0.5f);
         }
 
     }
@@ -68,6 +55,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            gameFinished = true;
+        }
+    }
 
 
 }
