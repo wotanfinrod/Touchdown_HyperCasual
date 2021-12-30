@@ -1,3 +1,3 @@
 # Touchdown_HyperCasual
-Case Study for Omnio Games.  
+HyperCasual Game Prototype  
 Space Bar -> Lane Shift.  
